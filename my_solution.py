@@ -217,7 +217,7 @@ class UNet(torch.nn.Module):
     Note that in the original UNet's Caffe implementation:
     - There is an extra ReLU layer directly after every transposed convolution, 
     so there are 3, not 2 ReLU layers per expanding layer. This is not 
-    mentioned in the paper, and we do not implement the extra ReLU layer here.
+    mentioned in the paper, but we still implement the extra ReLU layer here.
     - The dropout layers occur in the last 2 contracting layers.
     
     """
@@ -691,7 +691,7 @@ if __name__ == '__main__':
     number_of_images_per_car = 16
     number_of_cross_validation_cars = 48
     number_of_cross_validation_examples = number_of_cross_validation_cars * number_of_images_per_car
-    (start_epoch, number_of_epochs) = (0, 50)
+    (start_epoch, number_of_epochs) = (0, 150)
     model = UNet().cuda()
     initial_learning_rate = 3e-4
     optimizer = torch.optim.SGD(model.parameters(), lr = initial_learning_rate, momentum = 0.99, weight_decay = 1e-4)
@@ -704,7 +704,7 @@ if __name__ == '__main__':
     
     to_train = True
     # Choose epoch for early stopping after examining learning curves.
-    epoch_of_chosen_model = None
+    epoch_of_chosen_model = 110
     if to_train:
         print('Phase: Train')
         only_save_last = number_of_epochs + 1
@@ -713,7 +713,7 @@ if __name__ == '__main__':
         print('Select epoch of snapshot for loading test model.')
     else:
         print(''); print('Phase: Test')
-        test(epoch_of_chosen_model, threshold = 0.5, already_predicted = False, debug = True)
+        test(epoch_of_chosen_model, threshold = 0.5, already_predicted = False, debug = False)
         check_submission()
         # Compress using 7z.
         subprocess.call('7z a %s %s' % (submission_file + '.7z', submission_file), shell = True)
