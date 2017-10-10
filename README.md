@@ -33,8 +33,10 @@ To view the learning curves while training, use the following command in termina
 ```
 python3 plot_learning_curves.py
 ```
+The plot is at `./results/my_solution/learning_curves.png`
 
 ## Results
+In the results directory `./results/my_solution/`, `submission.csv.7z` can be directly submitted to Kaggle for evaluation. `submission.csv` is the uncompressed form and `partial_submission.csv` contains the first few lines of `submission.csv`, just for making sure the submission format/syntax is correct. The sub-directory `predictions/test/` will contain some test predictions and `probabilities.h5`, the latter holding the probabilistic outputs of the network. Refer to the test code for more details about how `probabilities.h5` is generated, and what it contains.
 
 ### Dice coefficients
 Evaluation of predicted masks are done using the Dice coefficient, as described [here](https://www.kaggle.com/c/carvana-image-masking-challenge#evaluation). Cross validation is done on first 16 cars.
