@@ -38,6 +38,10 @@ The plot is at `./results/my_solution/learning_curves.png`
 ## Results
 In the results directory `./results/my_solution/`, `submission.csv.7z` can be directly submitted to Kaggle for evaluation. `submission.csv` is the uncompressed form and `partial_submission.csv` contains the first few lines of `submission.csv`, just for making sure the submission format/syntax is correct. The sub-directory `predictions/test/` will contain some test predictions and `probabilities.h5`, the latter holding the probabilistic outputs of the network. Refer to the test code for more details about how `probabilities.h5` is generated, and what it contains.
 
+### Learning curves
+![dice_scores](https://user-images.githubusercontent.com/7287899/31405199-ef3d2112-ae30-11e7-9779-ae769ce42e19.png)
+![losses](https://user-images.githubusercontent.com/7287899/31405244-0c36992e-ae31-11e7-9408-2ea9c406f26a.png)
+
 ### Dice coefficients
 Evaluation of predicted masks are done using the Dice coefficient, as described [here](https://www.kaggle.com/c/carvana-image-masking-challenge#evaluation). Cross validation is done on first 16 cars.
 
