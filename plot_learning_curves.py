@@ -20,16 +20,17 @@ def plot_learning_curves(experiment, epochs, train_losses, cross_validation_loss
     
     output_directory = './results/' + experiment + '/learningCurves/'
     image_file = output_directory + 'learning_curves.png'
+    matplotlib.pyplot.tight_layout()
     matplotlib.pyplot.savefig(image_file)
 
-def process_results(experiment):
+def process_results(experiment, x_limits, y_limits):
     output_directory = './results/' + experiment + '/learningCurves/'
     train_losses = numpy.load(output_directory + 'train_losses.npy')
     cross_validation_losses = numpy.load(output_directory + 'cross_validation_losses.npy')
     dice_scores = numpy.load(output_directory + 'dice_scores.npy')
     epochs = numpy.arange(1, len(train_losses) + 1)
 
-    plot_learning_curves(experiment, epochs, train_losses, cross_validation_losses, dice_scores, x_limits = [1, 50], y_limits = [0, 0.1])
+    plot_learning_curves(experiment, epochs, train_losses, cross_validation_losses, dice_scores, x_limits, y_limits)
     training_curves = numpy.column_stack((epochs, train_losses, cross_validation_losses, dice_scores))
     numpy.savetxt(
         output_directory + 'training_curves.csv', 
@@ -38,13 +39,14 @@ def process_results(experiment):
         header = 'Epochs, Train loss, Cross validation loss, Dice scores'
     )
     
-# Usage: python3 plot_learning_curves.py <number_of_epochs>, where <number_of_epochs> is the progress of training.    
 if __name__ == '__main__':
-    is_experiment_indexed = False
-    if is_experiment_indexed:
-        experiments = ['experiment' + str(i) for i in [52, 53, 54]]
-    else:
-        experiments = ['my_solution']
+    dice_score_limits = [0.995, 0.997]
+    loss_limits = [0.02, 0.08]
+    x_limits = [1, 150]
+    # Assign either dice_score_limits or loss_limits depending on what you want to focus on.
+    y_limits = loss_limits
+    # experiments = ['experiment' + str(i) for i in [53, 60, 61]]
+    experiments = ['my_solution']
     for experiment in experiments:
-        process_results(experiment)
+        process_results(experiment, x_limits, y_limits)
         
